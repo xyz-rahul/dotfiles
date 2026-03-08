@@ -123,6 +123,72 @@ end)
 
 sleepWatcher:start()
 
+
+--------------------------------------------------------------------------------
+-- Display Sleep Toggle (Persistent)
+--------------------------------------------------------------------------------
+local displaySleepToggle = hs.menubar.new()
+local timer = nil
+local countdown = nil
+local remaining = 0
+
+local PREFIX = "Awake "
+
+local function stopTimers()
+    if timer then timer:stop() timer = nil end
+    if countdown then countdown:stop() countdown = nil end
+end
+
+local function updateTitle()
+    if remaining > 0 then
+        local m = math.floor(remaining / 60)
+        local s = remaining % 60
+        displaySleepToggle:setTitle(PREFIX .. string.format("%02d:%02d", m, s))
+    else
+        displaySleepToggle:setTitle("Allow Sleep")
+    end
+end
+
+local function startTimer(seconds)
+    stopTimers()
+    remaining = seconds
+
+    hs.caffeinate.set("displayIdle", true)
+
+    countdown = hs.timer.doEvery(1, function()
+        remaining = remaining - 1
+        updateTitle()
+        if remaining <= 0 then
+            stopTimers()
+            hs.caffeinate.set("displayIdle", false)
+            displaySleepToggle:setTitle("Allow Sleep")
+        end
+    end)
+
+    timer = hs.timer.doAfter(seconds, function()
+        stopTimers()
+        hs.caffeinate.set("displayIdle", false)
+        displaySleepToggle:setTitle("Allow Sleep")
+    end)
+
+    updateTitle()
+end
+
+displaySleepToggle:setMenu({
+    { title = "30 minutes", fn = function() startTimer(30*60) end },
+    { title = "1 hour", fn = function() startTimer(60*60) end },
+    { title = "2 hours", fn = function() startTimer(2*60*60) end },
+    { title = "5 hours", fn = function() startTimer(5*60*60) end },
+    { title = "-" },
+    { title = "Stop", fn = function()
+        stopTimers()
+        hs.caffeinate.set("displayIdle", false)
+        displaySleepToggle:setTitle("Allow Sleep")
+    end }
+})
+
+displaySleepToggle:setTitle("Allow Sleep")
+
 --------------------------------------------------------------------------------
 -- Final Notification
 --------------------------------------------------------------------------------

@@ -1,18 +1,23 @@
-{{- if eq (env "GIT_PROFILE") "personal" -}}
+{{- if eq .chezmoi.hostname "Rahuls-MacBook-Air" -}}
+
 [user]
     name = Rahul Kumar
     email = xyz.rahulkumar2002@gmail.com
+
 [github]
     user = xyz-rahul
     url = https://github.com/xyz-rahul
 
-{{- else if eq (env "GIT_PROFILE") "work" -}}
+{{- else -}}
+
 [user]
     name = Rahul Kumar
     email = rahul.kumar2@cashify.in
+
 [github]
     user = rahul-kumar-cashify
     url = https://github.com/rahul-kumar-cashify
+
 {{- end }}
 # ─────────────────────────────────────────────
 # Git LFS (Large File Storage)

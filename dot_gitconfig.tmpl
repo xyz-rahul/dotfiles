@@ -1,11 +1,12 @@
-{{- if eq .gitProfile "personal" -}}
+{{- if eq (env "GIT_PROFILE") "personal" -}}
 [user]
     name = Rahul Kumar
     email = xyz.rahulkumar2002@gmail.com
 [github]
     user = xyz-rahul
     url = https://github.com/xyz-rahul
-{{- else if eq .gitProfile "work" -}}
+
+{{- else if eq (env "GIT_PROFILE") "work" -}}
 [user]
     name = Rahul Kumar
     email = rahul.kumar2@cashify.in
@@ -13,7 +14,6 @@
     user = rahul-kumar-cashify
     url = https://github.com/rahul-kumar-cashify
 {{- end }}
-
 # ─────────────────────────────────────────────
 # Git LFS (Large File Storage)
 # ─────────────────────────────────────────────

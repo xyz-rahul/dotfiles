@@ -1,20 +1,16 @@
 return {
     "rmagatti/auto-session",
     lazy = false,
-    keys = {
-        { "<leader>ws", "<cmd>AutoSession search<cr>", desc = "Session search" },
-        { "<leader>wS", "<cmd>AutoSession save<cr>", desc = "Save session" },
-    },
     opts = {
         auto_save = true,
-        auto_restore = true,
+        auto_restore = false,
         auto_create = true,
         log_level = "info",
-        show_auto_restore_notif = true,
+        show_auto_restore_notif = false,
         -- Don't save/restore in these dirs (avoid clutter)
         suppressed_dirs = { "~/", "~/Downloads", "/" },
         session_lens = {
-            load_on_setup = true, -- use :Telescope session-lens
+            load_on_setup = false,
         },
     },
     config = function(_, opts)

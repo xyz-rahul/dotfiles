@@ -17,13 +17,30 @@ return {
 		lazy = false,
 		priority = 900,
 		config = function()
-			-- If you want a consistent Visual selection across all themes, keep this.
-			-- If you want each theme's native Visual, delete this whole autocmd.
-			local function apply_visual()
+			local function apply_custom_highlights()
 				vim.opt.termguicolors = true
 				vim.api.nvim_set_hl(0, "Visual", { bg = "#FFD700", fg = "#000000" })
+
+				-- Force transparent background for all colorschemes
+				local transparent_groups = {
+					"Normal",
+					"NormalFloat",
+					"NormalNC",
+					"SignColumn",
+					"LineNr",
+					"Folded",
+					"EndOfBuffer",
+					"FloatBorder",
+				}
+
+				for _, group in ipairs(transparent_groups) do
+					vim.api.nvim_set_hl(0, group, { bg = "NONE", ctermbg = "NONE" })
+				end
 			end
-			vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_visual })
+			vim.api.nvim_create_autocmd("ColorScheme", { callback = apply_custom_highlights })
+
+			-- Apply immediately for current session
+			apply_custom_highlights()
 
 			require("themery").setup({
 				themes = {
@@ -68,14 +85,15 @@ return {
 					{ name = "Moonfly", colorscheme = "moonfly" },
 
 					-- NEW: kanagawa-paper
-					-- (this one’s colorscheme name is typically "kanagawa-paper")
+					-- (this one's colorscheme name is typically "kanagawa-paper")
 					{ name = "Kanagawa Paper", colorscheme = "kanagawa-paper" },
 				},
 
 				livePreview = true,
 			})
 
-			vim.keymap.set("n", "<leader>ut", "<cmd>Themery<CR>", { desc = "Themery: pick theme" })
+			-- Create custom command for easier access
+			vim.api.nvim_create_user_command("Colorscheme", "Themery", {})
 		end,
 	},
 }

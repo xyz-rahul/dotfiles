@@ -45,6 +45,45 @@ return {
 						require("lspconfig")[server_name].setup({ capabilities = capabilities })
 					end,
 
+					lua_ls = function()
+						require("lspconfig").lua_ls.setup({
+							capabilities = capabilities,
+							single_file_support = true,
+							root_dir = function(fname)
+								local util = require("lspconfig.util")
+								local nvim_config = vim.fn.stdpath("config")
+
+								-- If file is in nvim config, use that as root
+								if fname:match(vim.pesc(nvim_config)) then
+									return nvim_config
+								end
+
+								-- Otherwise use file's directory (not git root)
+								return util.path.dirname(fname)
+							end,
+							settings = {
+								Lua = {
+									runtime = {
+										version = "LuaJIT",
+									},
+									diagnostics = {
+										globals = { "vim" },
+									},
+									workspace = {
+										checkThirdParty = false,
+										ignoreDir = { ".git", "node_modules", vim.env.HOME },
+										library = {
+											vim.env.VIMRUNTIME,
+										},
+									},
+									telemetry = {
+										enable = false,
+									},
+								},
+							},
+						})
+					end,
+
 					--  Custom handler for basedpyright
 					basedpyright = function()
 						require("lspconfig").basedpyright.setup({

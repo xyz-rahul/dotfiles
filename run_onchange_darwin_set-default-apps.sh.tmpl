@@ -1,0 +1,20 @@
+#!/bin/bash
+{{ if eq .chezmoi.os "darwin" -}}
+set -euo pipefail
+
+if ! command -v duti &> /dev/null; then
+  echo "Installing duti..."
+  brew install duti
+fi
+
+echo "Configuring default apps..."
+
+{{ range $app, $exts := .default_apps }}
+echo "→ {{ $app }}"
+{{- range $exts }}
+duti -s "{{ $app }}" ".{{ . }}" all && echo "  .{{ . }}"
+{{- end }}
+{{ end }}
+
+echo "✓ Done"
+{{- end -}}

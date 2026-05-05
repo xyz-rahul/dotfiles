@@ -1,0 +1,32 @@
+default_apps:
+  com.microsoft.VSCode:
+    - lua
+    - c
+    - cpp
+    - h
+    - py
+    - rs
+    - go
+    - ts
+    - js
+    - json
+    - yaml
+    - yml
+    - toml
+    - md
+    - sh
+    - sql       # keep here for editing
+    - csv
+
+  com.jetbrains.intellij:
+    - java
+    - kt
+    - gradle
+
+  com.apple.Preview:
+    - pdf
+
+  org.jkiss.dbeaver.core.product:
+    - db
+    - sqlite
+    - sqlite3

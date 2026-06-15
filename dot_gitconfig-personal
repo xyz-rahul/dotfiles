@@ -1,0 +1,8 @@
+# ~/.gitconfig-personal — personal identity (default everywhere)
+[user]
+    name = Rahul Kumar
+    email = xyz.rahulkumar2002@gmail.com
+
+[github]
+    user = xyz-rahul
+    url = https://github.com/xyz-rahul

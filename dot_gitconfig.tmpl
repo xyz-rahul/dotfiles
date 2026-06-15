@@ -1,24 +1,10 @@
-{{- if eq .chezmoi.hostname "Rahuls-MacBook-Air" -}}
+# Identity is split into two files (conditional-include pattern):
+#   ~/.gitconfig-personal  — default everywhere
+#   ~/.gitconfig-work      — auto-applied under ~/workspace/cashify/ (see bottom)
+# GitHub account auth is managed separately via `gh auth switch`.
+[include]
+    path = ~/.gitconfig-personal
 
-[user]
-    name = Rahul Kumar
-    email = xyz.rahulkumar2002@gmail.com
-
-[github]
-    user = xyz-rahul
-    url = https://github.com/xyz-rahul
-
-{{- else -}}
-
-[user]
-    name = Rahul Kumar
-    email = rahul.kumar2@cashify.in
-
-[github]
-    user = rahul-kumar-cashify
-    url = https://github.com/rahul-kumar-cashify
-
-{{- end }}
 # ─────────────────────────────────────────────
 # Git LFS (Large File Storage)
 # ─────────────────────────────────────────────
@@ -111,9 +97,9 @@
 
 
 # ─────────────────────────────────────────────
-# Include work-specific Git settings (optional)
+# Work identity: auto-applied for any repo under ~/workspace/cashify/
 # ─────────────────────────────────────────────
-# [includeIf "gitdir:~/code/work/"]
-#     path = ~/code/work/.gitconfig
+[includeIf "gitdir:~/workspace/cashify/"]
+    path = ~/.gitconfig-work
 
 

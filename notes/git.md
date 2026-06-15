@@ -37,6 +37,95 @@ git config --local edit           # Edit local config
 git config --global edit          # Edit global config
 ```
 
+## Multiple GitHub Accounts (personal + work)
+
+Three independent layers — they solve different problems:
+
+| Layer | Controls | Mechanism |
+|-------|----------|-----------|
+| Commit identity | `name` / `email` on commits | conditional `includeIf` |
+| Push/clone auth | which GitHub account you act as | SSH host aliases + keys |
+| `gh` CLI | `gh pr`, `gh repo`, etc. | `gh auth switch` |
+
+### 1. Commit identity — conditional include (auto by directory)
+Identity is split into per-profile files and chosen by repo location:
+```ini
+# ~/.gitconfig
+[include]
+    path = ~/.gitconfig-personal          ; default everywhere
+
+[includeIf "gitdir:~/workspace/cashify/"] ; trailing / = recursive
+    path = ~/.gitconfig-work              ; overrides inside work dir
+```
+```ini
+# ~/.gitconfig-personal
+[user]
+    name  = Rahul Kumar
+    email = xyz.rahulkumar2002@gmail.com
+
+# ~/.gitconfig-work
+[user]
+    name  = Rahul Kumar
+    email = rahul.kumar2@cashify.in
+```
+Verify the active identity / connection:
+```bash
+# In any repository
+git config user.name
+git config user.email
+
+# Test SSH connection
+ssh -T git@github.com-personal
+ssh -T git@github.com-work
+```
+
+### 2. Push/clone auth — one SSH key per account
+```bash
+ssh-keygen -t ed25519 -C "personal" -f ~/.ssh/id_ed25519_p   # personal
+ssh-keygen -t ed25519 -C "work"     -f ~/.ssh/id_ed25519     # work
+# add each .pub to the matching GitHub account: Settings > SSH keys
+```
+```ini
+# ~/.ssh/config — alias per account (both point at github.com)
+Host xyz-rahul
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_p
+
+Host rahul-kumar-cashify
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519
+```
+Use the alias in the remote so the right key is picked:
+```bash
+git clone git@rahul-kumar-cashify:reglobe/repo.git     # work
+git clone git@xyz-rahul:xyz-rahul/repo.git             # personal
+git remote set-url origin git@xyz-rahul:xyz-rahul/repo.git   # fix an existing remote
+```
+Test which account a key authenticates as:
+```bash
+ssh -T git@xyz-rahul                 # > Hi xyz-rahul!
+ssh -T git@rahul-kumar-cashify       # > Hi rahul-kumar-cashify!
+```
+> Note: a plain `git@github.com:` remote ignores these aliases and falls back
+> to the default key. Use the alias host for per-account auth to actually work.
+
+### 3. gh CLI — multiple accounts
+```bash
+# Add multiple accounts
+gh auth login --hostname github-work
+gh auth login --hostname github-personal
+
+# Switch between accounts
+gh auth switch
+
+# Check current account
+gh auth status
+```
+
+**Reference:** [One Machine, Many Identities — switch between multiple Git profiles](https://medium.com/@leroyleowdev/one-machine-many-identities-adding-effortlessly-switch-between-multiple-git-profiles-fd56a20bc181)
+
 ## Status and Tracking
 ```bash
 git status                       # Show the working tree status

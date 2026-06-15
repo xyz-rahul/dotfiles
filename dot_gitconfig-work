@@ -1,0 +1,8 @@
+# ~/.gitconfig-work — work identity (auto-applied under ~/workspace/cashify/)
+[user]
+    name = Rahul Kumar
+    email = rahul.kumar2@cashify.in
+
+[github]
+    user = rahul-kumar-cashify
+    url = https://github.com/rahul-kumar-cashify

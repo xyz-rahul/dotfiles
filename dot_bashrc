@@ -3,7 +3,7 @@ case $- in
   *i*) ;;
     *) return;;
 esac
-# If not already inside tmux, bind Ctrl+Space to auto-attach
+# If not already inside tmux, bind Ctrl+b to attach (or create) a tmux session
 if [ -z "$TMUX" ]; then
   bind -x '"\C-b": tmux attach 2>/dev/null || tmux new -s main'
 fi
@@ -136,9 +136,7 @@ plugins=(
   aws
   fzf
   pyenv
-  aws
   colored-man-pages
-  pyenv
 )
 
 # Which plugins would you like to conditionally load? (plugins can be found in ~/.oh-my-bash/plugins/*)
@@ -155,6 +153,8 @@ plugins=(
 #
 #OMB_TERM_USE_TPUT=no
 
+# Make plain TAB trigger fzf fuzzy completion (instead of the default '**' trigger)
+export FZF_COMPLETION_TRIGGER=''
 source "$OSH"/oh-my-bash.sh
 
 # User configuration

@@ -81,6 +81,9 @@ config.keys = {
 	-- Copy/Paste
 	{ key = "c", mods = "CTRL|SHIFT", action = wezterm.action.CopyTo("Clipboard") },
 	{ key = "v", mods = "CTRL|SHIFT", action = wezterm.action.PasteFrom("Clipboard") },
+	-- Ctrl+[ / ] -> previous / next tmux window (sends prefix C-b + p/n)
+	{ key = "[", mods = "CTRL", action = wezterm.action.SendString("\x02p") },
+	{ key = "]", mods = "CTRL", action = wezterm.action.SendString("\x02n") },
 }
 
 return config

@@ -33,10 +33,33 @@
 
 [diff]
     algorithm = histogram
+    colorMoved = default
+
+# ─────────────────────────────────────────────
+# Fetch / pull / branch behaviour
+# ─────────────────────────────────────────────
+[fetch]
+    prune = true
+
+[pull]
+    ff = only
+
+[init]
+    defaultBranch = main
+
+[branch]
+    sort = -committerdate
 
 # ─────────────────────────────────────────────
 # Merge conflict handling
 # ─────────────────────────────────────────────
+[merge]
+    conflictStyle = zdiff3
+
+[rebase]
+    autostash = true
+    autosquash = true
+
 [rerere]
     enabled = true
     autoupdate = false
@@ -60,11 +83,11 @@
     l = log --graph --oneline --decorate --abbrev-commit
 
     open = "!f() { \
-      branch=$(git rev-parse --abbrev-ref HEAD); \
-      repo_url=$(git remote get-url origin); \
-      repo_url=$(echo \"$repo_url\" | sed -E 's#(git@|https://)github.com[:/]#https://github.com/#' | sed 's/.git$//'); \
-      url=\"$repo_url/tree/$branch\"; \
-      open \"$url\"; \
+    branch=$(git rev-parse --abbrev-ref HEAD); \
+    repo_url=$(git remote get-url origin); \
+    repo_url=$(echo \"$repo_url\" | sed -E 's#^(git@[^:]+:|https://[^/]+/)#https://github.com/#' | sed 's/\\.git$//'); \
+    url=\"$repo_url/tree/$branch\"; \
+    open \"$url\"; \
     }; f"
 
     rebase-undo = "!f() { \

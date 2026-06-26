@@ -1,6 +1,7 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        branch = "master", -- classic configs API; `main` is the rewrite without nvim-treesitter.configs
         build = ":TSUpdate",
         config = function()
             require("nvim-treesitter.configs").setup({

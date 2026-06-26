@@ -1,6 +1,5 @@
 return {
-    "phaazon/hop.nvim",
-    branch = "v2", -- optional but strongly recommended
+    "smoka7/hop.nvim", -- maintained fork; phaazon/hop.nvim was deleted
     config = function()
         require("hop").setup({ keys = "etovxqpdygfblzhckisuran" })
 

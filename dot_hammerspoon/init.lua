@@ -56,7 +56,7 @@ end
 bindAppLaunch({ "cmd" }, "1", "WezTerm")
 bindAppLaunch({ "cmd" }, "2", "Intellij IDEA")
 bindAppLaunch({ "cmd" }, "3", "Google Chrome")
--- bindAppLaunch({ "cmd" }, "4", "ChatGpt")
+bindAppLaunch({ "cmd" }, "4", "claude")
 bindAppLaunch({ "cmd" }, "5", "dbeaver")
 bindAppLaunch({ "cmd" }, "6", "Postman")
 -- bindAppLaunch({ "cmd" }, "7", "pycharm ce")

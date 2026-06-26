@@ -1,6 +1,6 @@
 return {
     "echasnovski/mini.surround",
-    version = "*",
+    version = "v0.17.0",
     config = function()
         require("mini.surround").setup()
     end,

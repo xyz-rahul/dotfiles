@@ -153,8 +153,6 @@ plugins=(
 #
 #OMB_TERM_USE_TPUT=no
 
-# Make plain TAB trigger fzf fuzzy completion (instead of the default '**' trigger)
-export FZF_COMPLETION_TRIGGER=''
 source "$OSH"/oh-my-bash.sh
 
 # User configuration

@@ -54,18 +54,17 @@ function bindAppLaunch(mods, key, appName)
 end
 
 bindAppLaunch({ "cmd" }, "1", "WezTerm")
-bindAppLaunch({ "cmd" }, "2", "Intellij IDEA")
-bindAppLaunch({ "cmd" }, "3", "Google Chrome")
+bindAppLaunch({ "cmd" }, "2", "Google Chrome")
 bindAppLaunch({ "cmd" }, "4", "claude")
 bindAppLaunch({ "cmd" }, "5", "dbeaver")
 bindAppLaunch({ "cmd" }, "6", "Postman")
--- bindAppLaunch({ "cmd" }, "7", "pycharm ce")
-bindAppLaunch({ "cmd" }, "7", "antigravity")
--- bindAppLaunch({ "cmd" }, "7", "visual studio code")
+bindAppLaunch({ "cmd" }, "8", "Intellij IDEA")
+bindAppLaunch({ "cmd", "shift" }, "8", "zed")
 bindAppLaunch({ "cmd" }, "9", "Slack")
+bindAppLaunch({ "cmd" }, "0", "Obsidian")
 
 -- Reopen Finder
-hs.hotkey.bind({ "cmd" }, "0", function()
+hs.hotkey.bind({ "cmd", "shift" }, "0", function()
 	hs.osascript.applescript('tell application "Finder" to reopen activate')
 end)
 

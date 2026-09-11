@@ -54,7 +54,7 @@ function bindAppLaunch(mods, key, appName)
 end
 
 bindAppLaunch({ "cmd" }, "1", "WezTerm")
-bindAppLaunch({ "cmd" }, "2", "Google Chrome")
+bindAppLaunch({ "cmd" }, "3", "Google Chrome")
 bindAppLaunch({ "cmd" }, "4", "claude")
 bindAppLaunch({ "cmd" }, "5", "dbeaver")
 bindAppLaunch({ "cmd" }, "6", "Postman")

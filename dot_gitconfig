@@ -126,3 +126,5 @@
     path = ~/.gitconfig-work
 
 
+[core]
+	autocrlf = input
